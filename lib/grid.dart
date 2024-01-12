@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_state_management_all_in_one/constants.dart';
 
+typedef GridIndex = (int, int);
+
 class Grid extends StatefulWidget {
   const Grid({
     super.key,
@@ -11,13 +13,20 @@ class Grid extends StatefulWidget {
 }
 
 class _GridState extends State<Grid> {
+  final Set<GridIndex> _indexes = {};
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onPanStart: (details) {
+        _indexes.add(_panIndex(details.localPosition));
+      },
       onPanUpdate: (details) {
-        final pos = details.localPosition;
-        final index = (pos / (Constants.gridDimension / Constants.gridSize));
-        print('Pan: $pos | ${index.dx.floor()},${index.dy.floor()}');
+        _indexes.add(_panIndex(details.localPosition));
+      },
+      onPanEnd: (details) {
+        print(_indexes);
+        _indexes.clear();
       },
       child: GridView.count(
         crossAxisCount: Constants.gridSize,
@@ -38,5 +47,11 @@ class _GridState extends State<Grid> {
         ),
       ),
     );
+  }
+
+  GridIndex _panIndex(Offset localPosition) {
+    final index =
+        localPosition / (Constants.gridDimension / Constants.gridSize);
+    return (index.dx.floor(), index.dy.floor());
   }
 }
