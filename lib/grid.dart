@@ -1,8 +1,25 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_state_management_all_in_one/constants.dart';
 
 typedef GridIndex = (int, int);
 typedef GridMargin = (double, double);
+typedef GridCell = ({Letter letter, GridIndex index});
+
+List<GridCell> extractGrid() {
+  var extractList = [...Constants.letters];
+
+  List<GridCell> cells = [];
+  for (var i = 0; i < Constants.gridSize * Constants.gridSize; ++i) {
+    final letter = extractList.removeAt(Random().nextInt(extractList.length));
+    final index = ((i / Constants.gridSize).floor(), i % Constants.gridSize);
+
+    cells.add((index: index, letter: letter));
+  }
+
+  return cells;
+}
 
 class Grid extends StatefulWidget {
   const Grid({
@@ -15,6 +32,7 @@ class Grid extends StatefulWidget {
 
 class _GridState extends State<Grid> {
   final Set<GridIndex> _indexes = {};
+  final List<({Letter letter, GridIndex index})> _letters = extractGrid();
 
   @override
   Widget build(BuildContext context) {
@@ -44,27 +62,24 @@ class _GridState extends State<Grid> {
       },
       child: GridView.count(
         crossAxisCount: Constants.gridSize,
-        children: List.generate(
-          Constants.gridSize * Constants.gridSize,
-          (index) {
-            final row = (index / Constants.gridSize).floor();
-            final column = index % Constants.gridSize;
-            return Container(
-              decoration: BoxDecoration(
-                color: _indexes.contains((row, column))
-                    ? Colors.cyan
-                    : Colors.cyan[50],
-                border: Border.all(color: Colors.black),
-              ),
-              child: Center(
-                child: Text(
-                  "($row, $column)",
-                  style: Theme.of(context).textTheme.headlineSmall,
+        children: _letters
+            .map(
+              (entry) => Container(
+                decoration: BoxDecoration(
+                  color: _indexes.contains(entry.index)
+                      ? Colors.cyan
+                      : Colors.cyan[50],
+                  border: Border.all(color: Colors.black),
+                ),
+                child: Center(
+                  child: Text(
+                    entry.letter.letter,
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
                 ),
               ),
-            );
-          },
-        ),
+            )
+            .toList(),
       ),
     );
   }
