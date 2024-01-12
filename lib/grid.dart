@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_state_management_all_in_one/constants.dart';
 
 typedef GridIndex = (int, int);
+typedef GridMargin = (double, double);
 
 class Grid extends StatefulWidget {
   const Grid({
@@ -20,12 +21,19 @@ class _GridState extends State<Grid> {
     return GestureDetector(
       onPanStart: (details) {
         setState(() {
-          _indexes.add(_panIndex(details.localPosition));
+          final pos = _panIndex(details.localPosition);
+          _indexes.add(pos.index);
         });
       },
       onPanUpdate: (details) {
         setState(() {
-          _indexes.add(_panIndex(details.localPosition));
+          final pos = _panIndex(details.localPosition);
+          if (pos.margin.$1 > Constants.panMargin &&
+              pos.margin.$1 < (1 - Constants.panMargin) &&
+              pos.margin.$2 > Constants.panMargin &&
+              pos.margin.$2 < (1 - Constants.panMargin)) {
+            _indexes.add(pos.index);
+          }
         });
       },
       onPanEnd: (details) {
@@ -61,9 +69,11 @@ class _GridState extends State<Grid> {
     );
   }
 
-  GridIndex _panIndex(Offset localPosition) {
-    final index =
+  ({GridIndex index, GridMargin margin}) _panIndex(Offset localPosition) {
+    final offset =
         localPosition / (Constants.gridDimension / Constants.gridSize);
-    return (index.dy.floor(), index.dx.floor());
+    final index = (offset.dy.floor(), offset.dx.floor());
+    final margin = (offset.dy - index.$1, offset.dx - index.$2);
+    return (index: index, margin: margin);
   }
 }
