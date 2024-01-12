@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-const gridSize = 4;
+import 'package:flutter_state_management_all_in_one/constants.dart';
+import 'package:flutter_state_management_all_in_one/grid.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,29 +20,12 @@ class MyApp extends StatelessWidget {
       home: Column(
         children: [
           Container(
-            height: 600,
-            width: 600,
+            height: Constants.gridDimension,
+            width: Constants.gridDimension,
             decoration: BoxDecoration(
               border: Border.all(color: Colors.black),
             ),
-            child: GridView.count(
-              crossAxisCount: gridSize,
-              children: List.generate(
-                gridSize * gridSize,
-                (index) => Container(
-                  decoration: BoxDecoration(
-                    color: Colors.amber,
-                    border: Border.all(color: Colors.black),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Item $index',
-                      style: Theme.of(context).textTheme.headlineSmall,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            child: const Grid(),
           ),
         ],
       ),
