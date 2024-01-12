@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter_state_management_all_in_one/constants.dart';
 import 'package:itrie/itrie.dart';
 
 typedef Word = ({int points});
@@ -23,7 +24,20 @@ final class Dictionary {
               (key) => key.length >= 2 && RegExp(r'^[A-Za-z]+$').hasMatch(key),
             )
             .map(
-              (key) => (key.toUpperCase(), (points: 0)),
+              (key) => (
+                key.toUpperCase(),
+                (
+                  points: key
+                      .toUpperCase()
+                      .split("")
+                      .map(
+                        (letter) => Constants.letterMap[letter]!,
+                      )
+                      .reduce(
+                        (acc, points) => acc + points,
+                      ),
+                ),
+              ),
             )
             .toList(),
       );
