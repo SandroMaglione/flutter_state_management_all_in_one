@@ -19,31 +19,43 @@ class _GridState extends State<Grid> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onPanStart: (details) {
-        _indexes.add(_panIndex(details.localPosition));
+        setState(() {
+          _indexes.add(_panIndex(details.localPosition));
+        });
       },
       onPanUpdate: (details) {
-        _indexes.add(_panIndex(details.localPosition));
+        setState(() {
+          _indexes.add(_panIndex(details.localPosition));
+        });
       },
       onPanEnd: (details) {
         print(_indexes);
-        _indexes.clear();
+        setState(() {
+          _indexes.clear();
+        });
       },
       child: GridView.count(
         crossAxisCount: Constants.gridSize,
         children: List.generate(
           Constants.gridSize * Constants.gridSize,
-          (index) => Container(
-            decoration: BoxDecoration(
-              color: Colors.amber,
-              border: Border.all(color: Colors.black),
-            ),
-            child: Center(
-              child: Text(
-                "(${(index / Constants.gridSize).floor()}, ${index % Constants.gridSize})",
-                style: Theme.of(context).textTheme.headlineSmall,
+          (index) {
+            final row = (index / Constants.gridSize).floor();
+            final column = index % Constants.gridSize;
+            return Container(
+              decoration: BoxDecoration(
+                color: _indexes.contains((row, column))
+                    ? Colors.cyan
+                    : Colors.cyan[50],
+                border: Border.all(color: Colors.black),
               ),
-            ),
-          ),
+              child: Center(
+                child: Text(
+                  "($row, $column)",
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+              ),
+            );
+          },
         ),
       ),
     );
