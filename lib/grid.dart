@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_state_management_all_in_one/constants.dart';
+import 'package:flutter_state_management_all_in_one/main.dart';
 
 typedef GridIndex = (int, int);
 typedef GridMargin = (double, double);
@@ -55,18 +56,19 @@ class _GridState extends State<Grid> {
         });
       },
       onPanEnd: (details) {
-        print(
-          _indexes
-              .map(
-                (index) => _letters.firstWhere(
-                  (cell) => cell.index == index,
-                ),
-              )
-              .map(
-                (cell) => cell.letter.letter,
-              )
-              .join(),
-        );
+        final word = _indexes
+            .map(
+              (index) => _letters.firstWhere(
+                (cell) => cell.index == index,
+              ),
+            )
+            .map(
+              (cell) => cell.letter.letter,
+            )
+            .join();
+
+        final findWord = dictionary.words.get(word);
+        print("$word: $findWord");
 
         setState(() {
           _indexes.clear();

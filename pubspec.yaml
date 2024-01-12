@@ -11,6 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  itrie:
+    path: ./packages/itrie
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -19,3 +22,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+assets:
+  - assets/words.txt

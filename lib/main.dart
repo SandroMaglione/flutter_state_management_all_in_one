@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_state_management_all_in_one/constants.dart';
+import 'package:flutter_state_management_all_in_one/dictionary.dart';
 import 'package:flutter_state_management_all_in_one/grid.dart';
 
-void main() {
+final dictionary = Dictionary();
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dictionary.init();
   runApp(const MyApp());
 }
 
