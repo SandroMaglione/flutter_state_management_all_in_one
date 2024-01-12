@@ -39,7 +39,7 @@ class _GridState extends State<Grid> {
             ),
             child: Center(
               child: Text(
-                'Item $index',
+                "(${(index / Constants.gridSize).floor()}, ${index % Constants.gridSize})",
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),
@@ -52,6 +52,6 @@ class _GridState extends State<Grid> {
   GridIndex _panIndex(Offset localPosition) {
     final index =
         localPosition / (Constants.gridDimension / Constants.gridSize);
-    return (index.dx.floor(), index.dy.floor());
+    return (index.dy.floor(), index.dx.floor());
   }
 }
