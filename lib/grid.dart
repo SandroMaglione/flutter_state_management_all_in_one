@@ -55,7 +55,19 @@ class _GridState extends State<Grid> {
         });
       },
       onPanEnd: (details) {
-        print(_indexes);
+        print(
+          _indexes
+              .map(
+                (index) => _letters.firstWhere(
+                  (cell) => cell.index == index,
+                ),
+              )
+              .map(
+                (cell) => cell.letter.letter,
+              )
+              .join(),
+        );
+
         setState(() {
           _indexes.clear();
         });
