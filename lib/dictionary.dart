@@ -1,8 +1,7 @@
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_state_management_all_in_one/constants.dart';
+import 'package:flutter_state_management_all_in_one/typedefs.dart';
 import 'package:itrie/itrie.dart';
-
-typedef Word = ({int points});
 
 final class Dictionary {
   Dictionary._();
@@ -20,9 +19,6 @@ final class Dictionary {
       words = ITrie<Word>.fromIterable(
         file
             .split("\n")
-            .where(
-              (key) => key.length >= 2 && RegExp(r'^[A-Za-z]+$').hasMatch(key),
-            )
             .map(
               (key) => (
                 key.toUpperCase(),

@@ -3,10 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_state_management_all_in_one/constants.dart';
 import 'package:flutter_state_management_all_in_one/main.dart';
-
-typedef GridIndex = (int, int);
-typedef GridMargin = (double, double);
-typedef GridCell = ({Letter letter, GridIndex index});
+import 'package:flutter_state_management_all_in_one/typedefs.dart';
 
 List<GridCell> extractGrid() {
   var extractList = [...Constants.letters];
@@ -33,7 +30,7 @@ class Grid extends StatefulWidget {
 
 class _GridState extends State<Grid> {
   final Set<GridIndex> _indexes = {};
-  final List<({Letter letter, GridIndex index})> _letters = extractGrid();
+  final List<GridCell> _letters = extractGrid();
 
   @override
   Widget build(BuildContext context) {
