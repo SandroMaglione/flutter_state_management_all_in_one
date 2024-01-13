@@ -1,4 +1,4 @@
-typedef Letter = ({String letter, int points});
+import 'package:flutter_state_management_all_in_one/typedefs.dart';
 
 abstract class Constants {
   static const gridSize = 4;

@@ -1,5 +1,4 @@
-import 'package:flutter_state_management_all_in_one/constants.dart';
-
+typedef Letter = ({String letter, int points});
 typedef GridIndex = (int, int);
 typedef GridMargin = (double, double);
 typedef GridCell = ({Letter letter, GridIndex index});

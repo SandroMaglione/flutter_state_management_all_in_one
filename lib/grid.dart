@@ -2,22 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_state_management_all_in_one/constants.dart';
+import 'package:flutter_state_management_all_in_one/grid_repository.dart';
 import 'package:flutter_state_management_all_in_one/main.dart';
 import 'package:flutter_state_management_all_in_one/typedefs.dart';
-
-List<GridCell> extractGrid() {
-  var extractList = [...Constants.letters];
-
-  List<GridCell> cells = [];
-  for (var i = 0; i < Constants.gridSize * Constants.gridSize; ++i) {
-    final letter = extractList.removeAt(Random().nextInt(extractList.length));
-    final index = ((i / Constants.gridSize).floor(), i % Constants.gridSize);
-
-    cells.add((index: index, letter: letter));
-  }
-
-  return cells;
-}
 
 class Grid extends StatefulWidget {
   const Grid({
@@ -30,7 +17,7 @@ class Grid extends StatefulWidget {
 
 class _GridState extends State<Grid> {
   final Set<GridIndex> _indexes = {};
-  final List<GridCell> _letters = extractGrid();
+  final List<GridCell> _letters = GridRepositoryImpl(Random()).generateGrid;
 
   @override
   Widget build(BuildContext context) {
