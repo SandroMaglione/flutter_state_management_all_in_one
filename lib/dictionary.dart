@@ -23,7 +23,8 @@ final class Dictionary {
                       .toUpperCase()
                       .split("")
                       .map(
-                        (letter) => const EnglishAlphabet().letterMap[letter]!,
+                        (letter) =>
+                            const EnglishAlphabet().letterMap[letter]!.points,
                       )
                       .reduce(
                         (acc, points) => acc + points,
