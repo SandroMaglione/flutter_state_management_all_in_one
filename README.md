@@ -32,3 +32,4 @@ RepositoryProvider<GridSettings>(
   create: (context) => const GridSettingsDefault(),
 )
 ```
+- Need to nest `RepositoryProvider` when one repository depends on another

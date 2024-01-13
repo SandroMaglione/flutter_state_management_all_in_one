@@ -4,19 +4,15 @@ import 'package:flutter_state_management_all_in_one/typedefs.dart';
 import 'package:itrie/itrie.dart';
 
 final class Dictionary {
-  Dictionary._();
+  final ITrie<Word> words;
+  const Dictionary._(this.words);
 
-  static final Dictionary _dictionary = Dictionary._();
-  factory Dictionary() => _dictionary;
+  factory Dictionary() => Dictionary._(ITrie.empty());
 
-  ITrie<Word> words = ITrie.empty();
-
-  Future<void> init() async {
-    /// Source: https://github.com/dwyl/english-words/blob/master/words.txt
+  static Future<Dictionary> init() async {
     final file = await rootBundle.loadString('words.txt');
-
-    try {
-      words = ITrie<Word>.fromIterable(
+    return Dictionary._(
+      ITrie<Word>.fromIterable(
         file
             .split("\n")
             .map(
@@ -36,10 +32,7 @@ final class Dictionary {
               ),
             )
             .toList(),
-      );
-      print("Init ${words.length} words");
-    } catch (e) {
-      print('Error loading words: $e');
-    }
+      ),
+    );
   }
 }
