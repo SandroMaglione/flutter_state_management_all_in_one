@@ -18,3 +18,17 @@ This project is part of my weekly newsletter at [**sandromaglione.com**](https:/
 </a>
 
 ## Project structure 🔜
+
+### `bloc`
+- Issues with missing providers
+```dart
+/// This was broken because the type was inferred as [GridSettingsDefault]
+RepositoryProvider(
+  create: (context) => const GridSettingsDefault(),
+)
+
+///                👇 This is required
+RepositoryProvider<GridSettings>(
+  create: (context) => const GridSettingsDefault(),
+)
+```
