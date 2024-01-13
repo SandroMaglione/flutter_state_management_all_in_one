@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:flutter_state_management_all_in_one/constants.dart';
+import 'package:flutter_state_management_all_in_one/alphabet.dart';
 import 'package:flutter_state_management_all_in_one/typedefs.dart';
 import 'package:itrie/itrie.dart';
 
@@ -27,7 +27,7 @@ final class Dictionary {
                       .toUpperCase()
                       .split("")
                       .map(
-                        (letter) => Constants.letterMap[letter]!,
+                        (letter) => const EnglishAlphabet().letterMap[letter]!,
                       )
                       .reduce(
                         (acc, points) => acc + points,

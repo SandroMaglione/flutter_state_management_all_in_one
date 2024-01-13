@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_state_management_all_in_one/constants.dart';
 import 'package:flutter_state_management_all_in_one/dictionary.dart';
 import 'package:flutter_state_management_all_in_one/grid.dart';
+import 'package:flutter_state_management_all_in_one/grid_settings.dart';
 
 final dictionary = Dictionary();
+const gridSettings = GridSettingsDefault();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,8 +26,8 @@ class MyApp extends StatelessWidget {
       home: Column(
         children: [
           Container(
-            height: Constants.gridDimension,
-            width: Constants.gridDimension,
+            height: gridSettings.gridDimension,
+            width: gridSettings.gridDimension,
             decoration: BoxDecoration(
               border: Border.all(color: Colors.black),
             ),

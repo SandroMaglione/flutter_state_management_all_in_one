@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_state_management_all_in_one/constants.dart';
+import 'package:flutter_state_management_all_in_one/alphabet.dart';
 import 'package:flutter_state_management_all_in_one/grid_repository.dart';
 import 'package:flutter_state_management_all_in_one/main.dart';
 import 'package:flutter_state_management_all_in_one/typedefs.dart';
@@ -17,7 +17,11 @@ class Grid extends StatefulWidget {
 
 class _GridState extends State<Grid> {
   final Set<GridIndex> _indexes = {};
-  final List<GridCell> _letters = GridRepositoryImpl(Random()).generateGrid;
+  final List<GridCell> _letters = GridRepositoryImpl(
+    Random(),
+    gridSettings,
+    const EnglishAlphabet(),
+  ).generateGrid;
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +35,10 @@ class _GridState extends State<Grid> {
       onPanUpdate: (details) {
         setState(() {
           final pos = _panIndex(details.localPosition);
-          if (pos.margin.$1 > Constants.panMargin &&
-              pos.margin.$1 < (1 - Constants.panMargin) &&
-              pos.margin.$2 > Constants.panMargin &&
-              pos.margin.$2 < (1 - Constants.panMargin)) {
+          if (pos.margin.$1 > gridSettings.panMargin &&
+              pos.margin.$1 < (1 - gridSettings.panMargin) &&
+              pos.margin.$2 > gridSettings.panMargin &&
+              pos.margin.$2 < (1 - gridSettings.panMargin)) {
             _indexes.add(pos.index);
           }
         });
@@ -59,7 +63,7 @@ class _GridState extends State<Grid> {
         });
       },
       child: GridView.count(
-        crossAxisCount: Constants.gridSize,
+        crossAxisCount: gridSettings.gridSize,
         children: _letters
             .map(
               (entry) => Container(
@@ -71,7 +75,7 @@ class _GridState extends State<Grid> {
                 ),
                 child: Center(
                   child: Text(
-                    entry.letter.letter,
+                    "${entry.letter.letter} (${entry.letter.points})",
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 ),
@@ -84,7 +88,7 @@ class _GridState extends State<Grid> {
 
   ({GridIndex index, GridMargin margin}) _panIndex(Offset localPosition) {
     final offset =
-        localPosition / (Constants.gridDimension / Constants.gridSize);
+        localPosition / (gridSettings.gridDimension / gridSettings.gridSize);
     final index = (offset.dy.floor(), offset.dx.floor());
     final margin = (offset.dy - index.$1, offset.dx - index.$2);
     return (index: index, margin: margin);
