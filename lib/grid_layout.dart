@@ -27,39 +27,41 @@ class GridLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          "Found $foundWords words | $points points",
-        ),
-        GestureDetector(
-          onPanStart: onPanStart,
-          onPanUpdate: onPanUpdate,
-          onPanEnd: onPanEnd,
-          child: Container(
-            width: gridSettings.gridDimension,
-            height: gridSettings.gridDimension,
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.black),
-            ),
-            child: GridView.count(
-              physics: const NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.all(0),
-              crossAxisCount: gridSettings.gridSize,
-              children: cells
-                  .map(
-                    (gridCell) => CellCard(
-                      gridCell: gridCell,
-                      isSelected: isSelected(gridCell.index),
-                    ),
-                  )
-                  .toList(),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            "Found $foundWords words | $points points",
+          ),
+          GestureDetector(
+            onPanStart: onPanStart,
+            onPanUpdate: onPanUpdate,
+            onPanEnd: onPanEnd,
+            child: Container(
+              width: gridSettings.gridDimension,
+              height: gridSettings.gridDimension,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+              ),
+              child: GridView.count(
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.all(0),
+                crossAxisCount: gridSettings.gridSize,
+                children: cells
+                    .map(
+                      (gridCell) => CellCard(
+                        gridCell: gridCell,
+                        isSelected: isSelected(gridCell.index),
+                      ),
+                    )
+                    .toList(),
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

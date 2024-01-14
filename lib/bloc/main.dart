@@ -20,9 +20,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Bloc State Management',
       home: Scaffold(
-        body: Center(
-          child: BlocProvider(
-            create: (context) => DictionaryBloc()..add(OnInitDictionary()),
+        body: BlocProvider(
+          create: (context) => DictionaryBloc()..add(OnInitDictionary()),
+          child: Center(
             child: BlocBuilder<DictionaryBloc, DictionaryState>(
               builder: (context, state) => switch (state) {
                 InitDictionary() => const Placeholder(),
