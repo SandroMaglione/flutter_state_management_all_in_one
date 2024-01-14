@@ -1,13 +1,13 @@
 part of 'gesture_bloc.dart';
 
 class GestureState {
-  final Set<GridIndex> _indexes;
-  const GestureState._(this._indexes);
+  final Set<GridIndex> indexes;
+  const GestureState._(this.indexes);
 
   factory GestureState.empty() => const GestureState._({});
 
   GestureState add(GridIndex gridIndex) =>
-      GestureState._({..._indexes, gridIndex});
+      GestureState._({...indexes, gridIndex});
 
-  bool isSelected(GridIndex index) => _indexes.contains(index);
+  bool isSelected(GridIndex index) => indexes.contains(index);
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_state_management_all_in_one/dictionary.dart';
 import 'package:flutter_state_management_all_in_one/grid_settings.dart';
 import 'package:flutter_state_management_all_in_one/typedefs.dart';
 
@@ -9,10 +8,8 @@ part 'gesture_state.dart';
 
 class GestureBloc extends Bloc<GestureEvent, GestureState> {
   final GridSettings _gridSettings;
-  final Dictionary _dictionary;
 
-  GestureBloc(this._gridSettings, this._dictionary)
-      : super(GestureState.empty()) {
+  GestureBloc(this._gridSettings) : super(GestureState.empty()) {
     on<OnPanStart>(
       (event, emit) {
         final pos = _panIndex(event.details.localPosition);
@@ -34,22 +31,6 @@ class GestureBloc extends Bloc<GestureEvent, GestureState> {
 
     on<OnPanEnd>(
       (event, emit) {
-        final word = state._indexes
-            .map(
-              (index) => event.letters.firstWhere(
-                (cell) => cell.index == index,
-              ),
-            )
-            .map(
-              (cell) => cell.letter.letter,
-            )
-            .join();
-
-        final findWord = _dictionary.words.get(word);
-
-        // TODO
-        print("$word: $findWord");
-
         emit(GestureState.empty());
       },
     );

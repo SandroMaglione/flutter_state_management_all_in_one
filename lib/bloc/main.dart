@@ -47,25 +47,16 @@ class MyApp extends StatelessWidget {
                             BlocProvider(
                               create: (context) => GestureBloc(
                                 context.read<GridSettings>(),
-                                dictionary,
                               ),
                             ),
                             BlocProvider(
                               create: (context) => BoardBloc(
                                 context.read<GridRepository>(),
+                                dictionary,
                               )..add(InitBoard()),
                             ),
                           ],
-                          child: Builder(
-                            builder: (context) {
-                              final gridSettings = context.read<GridSettings>();
-                              return SizedBox(
-                                height: gridSettings.gridDimension,
-                                width: gridSettings.gridDimension,
-                                child: const Grid(),
-                              );
-                            },
-                          ),
+                          child: const Grid(),
                         ),
                       ),
                     ),

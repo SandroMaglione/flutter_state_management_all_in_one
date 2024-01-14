@@ -17,7 +17,5 @@ class OnPanUpdate extends GestureEvent {
 
 class OnPanEnd extends GestureEvent {
   final DragEndDetails details;
-  final List<GridCell> letters;
-
-  const OnPanEnd({required this.details, required this.letters});
+  const OnPanEnd(this.details);
 }

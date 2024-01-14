@@ -14,23 +14,38 @@ class Grid extends StatelessWidget {
     final gestureBlocState = context.watch<GestureBloc>().state;
     final gridSettings = context.watch<GridSettings>();
     final boardBloc = context.watch<BoardBloc>();
-    return GestureDetector(
-      onPanStart: (details) => gestureBloc.add(OnPanStart(details)),
-      onPanUpdate: (details) => gestureBloc.add(OnPanUpdate(details)),
-      onPanEnd: (details) => gestureBloc.add(
-        OnPanEnd(details: details, letters: boardBloc.state),
-      ),
-      child: GridView.count(
-        crossAxisCount: gridSettings.gridSize,
-        children: boardBloc.state
-            .map(
-              (gridCell) => CellCard(
-                gridCell: gridCell,
-                isSelected: gestureBlocState.isSelected(gridCell.index),
-              ),
-            )
-            .toList(),
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          "Found ${boardBloc.state.foundWords.length} words | ${boardBloc.state.points} points",
+        ),
+        SizedBox(
+          height: gridSettings.gridDimension,
+          width: gridSettings.gridDimension,
+          child: GestureDetector(
+            onPanStart: (details) => gestureBloc.add(OnPanStart(details)),
+            onPanUpdate: (details) => gestureBloc.add(OnPanUpdate(details)),
+            onPanEnd: (details) {
+              boardBloc
+                  .add(SearchWord(context.read<GestureBloc>().state.indexes));
+              gestureBloc.add(OnPanEnd(details));
+            },
+            child: GridView.count(
+              crossAxisCount: gridSettings.gridSize,
+              children: boardBloc.state.cells
+                  .map(
+                    (gridCell) => CellCard(
+                      gridCell: gridCell,
+                      isSelected: gestureBlocState.isSelected(gridCell.index),
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

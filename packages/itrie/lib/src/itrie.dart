@@ -105,6 +105,7 @@ class ITrie<V> extends Iterable<(String, V)> {
   @override
   Iterator<(String, V)> get iterator => _ITrieIterator(this);
 
+  /// If `key` already present its value is overwritten with `value`.
   ITrie<V> insert(String key, V value) {
     if (key.isEmpty) return this;
 
@@ -112,6 +113,7 @@ class ITrie<V> extends Iterable<(String, V)> {
     final List<int> dStack = [];
     final List<_Node<V>> nStack = [];
 
+    bool addedNew = true;
     _Node<V> n = _root ?? _Node(key: key[0]);
     int cIndex = 0;
 
@@ -141,6 +143,7 @@ class ITrie<V> extends Iterable<(String, V)> {
       } else {
         final mid = n.mid;
         if (cIndex == key.length - 1) {
+          addedNew = n.value == null;
           n.value = value;
         } else if (mid == null) {
           dStack.add(0);
@@ -188,7 +191,7 @@ class ITrie<V> extends Iterable<(String, V)> {
       }
     }
 
-    return ITrie._(nStack[0], _count + 1);
+    return ITrie._(nStack[0], addedNew ? _count + 1 : _count);
   }
 
   V? get(String key) {

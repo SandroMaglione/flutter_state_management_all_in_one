@@ -6,3 +6,8 @@ sealed class BoardEvent {
 }
 
 class InitBoard extends BoardEvent {}
+
+class SearchWord extends BoardEvent {
+  final Set<GridIndex> indexes;
+  const SearchWord(this.indexes);
+}
