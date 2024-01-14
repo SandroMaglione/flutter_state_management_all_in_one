@@ -8,8 +8,7 @@
       "name": "bloc",
       "request": "launch",
       "type": "dart",
-      "program": "lib/bloc/main.dart",
-      "args": ["-d", "chrome"]
+      "program": "lib/bloc/main.dart"
     }
   ]
 }

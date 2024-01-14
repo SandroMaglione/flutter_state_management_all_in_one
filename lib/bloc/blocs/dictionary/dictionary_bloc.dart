@@ -15,7 +15,7 @@ class DictionaryBloc extends Bloc<DictionaryEvent, DictionaryState> {
           final dictionary = await Dictionary.init();
           emit(ValidDictionary(dictionary));
         } catch (e) {
-          emit(InvalidDictionary());
+          emit(InvalidDictionary(e));
         }
       },
     );

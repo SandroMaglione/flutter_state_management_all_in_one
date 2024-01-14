@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
               builder: (context, state) => switch (state) {
                 InitDictionary() => const Placeholder(),
                 LoadingWords() => const CircularProgressIndicator(),
-                InvalidDictionary() => const Placeholder(),
+                InvalidDictionary(e: final error) => Text(error.toString()),
                 ValidDictionary(dictionary: final dictionary) =>
                   MultiRepositoryProvider(
                     providers: [

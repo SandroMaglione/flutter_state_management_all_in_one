@@ -1,3 +1,5 @@
+import 'dart:isolate';
+
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_state_management_all_in_one/alphabet.dart';
 import 'package:flutter_state_management_all_in_one/typedefs.dart';
@@ -10,29 +12,28 @@ final class Dictionary {
   factory Dictionary() => Dictionary._(ITrie.empty());
 
   static Future<Dictionary> init() async {
-    final file = await rootBundle.loadString('words.txt');
-    return Dictionary._(
-      ITrie<Word>.fromIterable(
-        file
-            .split("\n")
-            .map(
-              (key) => (
-                key.toUpperCase(),
-                (
-                  points: key
-                      .toUpperCase()
-                      .split("")
-                      .map(
-                        (letter) =>
-                            const EnglishAlphabet().letterMap[letter]!.points,
-                      )
-                      .reduce(
-                        (acc, points) => acc + points,
-                      ),
-                ),
-              ),
-            )
-            .toList(),
+    final file = await rootBundle.loadString('assets/words.txt');
+    final iterable = file.split("\n").map(
+          (key) => (
+            key.toUpperCase(),
+            (
+              points: key
+                  .toUpperCase()
+                  .split("")
+                  .map(
+                    (letter) =>
+                        const EnglishAlphabet().letterMap[letter]!.points,
+                  )
+                  .reduce(
+                    (acc, points) => acc + points,
+                  ),
+            ),
+          ),
+        );
+
+    return Isolate.run<Dictionary>(
+      () => Dictionary._(
+        ITrie<Word>.fromIterable(iterable),
       ),
     );
   }
