@@ -22,6 +22,9 @@ dependencies:
   flutter_riverpod: ^2.4.9
   riverpod_annotation: ^2.3.3
 
+  # signals
+  signals: ^2.1.10
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -10,6 +10,7 @@ import 'package:flutter_state_management_all_in_one/bloc/grid.dart';
 import 'package:flutter_state_management_all_in_one/grid_repository.dart';
 import 'package:flutter_state_management_all_in_one/grid_settings.dart';
 
+// ignore: missing_provider_scope
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
