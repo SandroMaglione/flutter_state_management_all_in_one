@@ -25,6 +25,9 @@ dependencies:
   # signals
   signals: ^2.1.10
 
+  # getX
+  get: ^4.6.6
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

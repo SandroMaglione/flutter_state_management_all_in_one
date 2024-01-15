@@ -21,6 +21,12 @@
       "request": "launch",
       "type": "dart",
       "program": "lib/signals/main.dart"
+    },
+    {
+      "name": "getx",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/get/main.dart"
     }
   ]
 }
