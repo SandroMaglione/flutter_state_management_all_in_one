@@ -1,21 +1,22 @@
-part of 'board_bloc.dart';
+import 'package:flutter_state_management_all_in_one/typedefs.dart';
+import 'package:itrie/itrie.dart';
 
-class BoardState {
+class Board {
   final List<GridCell> cells;
   final ITrie<Word> foundWords;
-  const BoardState(this.cells, this.foundWords);
+  const Board(this.cells, this.foundWords);
 
-  factory BoardState.init(List<GridCell> cells) => BoardState(
+  factory Board.init(List<GridCell> cells) => Board(
         cells,
         ITrie.empty(),
       );
 
-  factory BoardState.empty() => BoardState(
+  factory Board.empty() => Board(
         [],
         ITrie.empty(),
       );
 
-  BoardState found(String key, Word word) => BoardState(
+  Board found(String key, Word word) => Board(
         cells,
         foundWords.insert(key, word),
       );

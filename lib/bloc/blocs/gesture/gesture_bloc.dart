@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_state_management_all_in_one/gesture.dart';
 import 'package:flutter_state_management_all_in_one/grid_settings.dart';
 import 'package:flutter_state_management_all_in_one/typedefs.dart';
 
 part 'gesture_event.dart';
-part 'gesture_state.dart';
 
-class GestureBloc extends Bloc<GestureEvent, GestureState> {
+class GestureBloc extends Bloc<GestureEvent, Gesture> {
   final GridSettings _gridSettings;
 
-  GestureBloc(this._gridSettings) : super(GestureState.empty()) {
+  GestureBloc(this._gridSettings) : super(Gesture.empty()) {
     on<OnPanStart>(
       (event, emit) {
         final pos = _panIndex(event.details.localPosition);
@@ -31,7 +31,7 @@ class GestureBloc extends Bloc<GestureEvent, GestureState> {
 
     on<OnPanEnd>(
       (event, emit) {
-        emit(GestureState.empty());
+        emit(Gesture.empty());
       },
     );
   }

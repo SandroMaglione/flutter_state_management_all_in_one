@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_state_management_all_in_one/board.dart';
 import 'package:flutter_state_management_all_in_one/dictionary.dart';
 import 'package:flutter_state_management_all_in_one/grid_repository.dart';
 import 'package:flutter_state_management_all_in_one/typedefs.dart';
-import 'package:itrie/itrie.dart';
 
 part 'board_event.dart';
-part 'board_state.dart';
 
-class BoardBloc extends Bloc<BoardEvent, BoardState> {
+class BoardBloc extends Bloc<BoardEvent, Board> {
   final GridRepository _gridRepository;
   final Dictionary _dictionary;
 
-  BoardBloc(this._gridRepository, this._dictionary)
-      : super(BoardState.empty()) {
+  BoardBloc(this._gridRepository, this._dictionary) : super(Board.empty()) {
     on<InitBoard>(
       (event, emit) {
-        emit(BoardState.init(_gridRepository.generateGrid));
+        emit(Board.init(_gridRepository.generateGrid));
       },
     );
 

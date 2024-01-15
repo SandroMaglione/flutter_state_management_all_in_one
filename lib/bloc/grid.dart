@@ -28,7 +28,7 @@ class Grid extends StatelessWidget {
       },
       onPanEnd: (details) {
         boardBloc.add(SearchWord(context.read<GestureBloc>().state.indexes));
-        gestureBloc.add(OnPanEnd(details));
+        gestureBloc.add(OnPanEnd());
       },
     );
   }

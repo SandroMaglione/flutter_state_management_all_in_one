@@ -9,6 +9,12 @@
       "request": "launch",
       "type": "dart",
       "program": "lib/bloc/main.dart"
+    },
+    {
+      "name": "riverpod",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/riverpod/main.dart"
     }
   ]
 }

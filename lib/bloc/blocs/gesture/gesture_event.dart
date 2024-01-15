@@ -15,7 +15,4 @@ class OnPanUpdate extends GestureEvent {
   const OnPanUpdate(this.details);
 }
 
-class OnPanEnd extends GestureEvent {
-  final DragEndDetails details;
-  const OnPanEnd(this.details);
-}
+class OnPanEnd extends GestureEvent {}
