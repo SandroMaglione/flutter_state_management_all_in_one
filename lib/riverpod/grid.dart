@@ -12,15 +12,15 @@ class Grid extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final dictionaryAsync = ref.watch(dictionaryProvider);
+
     final gridRepository = ref.watch(gridRepositoryProvider);
     final gesture = ref.watch(gestureProvider);
-    final gestureNotifier = ref.watch(gestureProvider.notifier);
-    final dictionaryAsync = ref.watch(dictionaryProvider);
     final gridSettings = ref.watch(gridSettingsProvider);
     final board = ref.watch(boardNotifierProvider(gridRepository));
-    final boardNotifier = ref.watch(
-      boardNotifierProvider(gridRepository).notifier,
-    );
+
+    final gestureNotifier = ref.read(gestureProvider.notifier);
+
     return dictionaryAsync.map(
       loading: (_) => const Center(
         child: CircularProgressIndicator(),
@@ -37,6 +37,10 @@ class Grid extends ConsumerWidget {
         onPanStart: gestureNotifier.onPanStart,
         onPanUpdate: gestureNotifier.onPanUpdate,
         onPanEnd: (_) {
+          final boardNotifier = ref.read(
+            boardNotifierProvider(gridRepository).notifier,
+          );
+
           boardNotifier.searchWord(dictionary.value, gesture.indexes);
           gestureNotifier.onPanEnd();
         },
