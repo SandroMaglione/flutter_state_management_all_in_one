@@ -15,11 +15,11 @@ class Grid extends ConsumerWidget {
     final dictionaryAsync = ref.watch(dictionaryProvider);
 
     final gridRepository = ref.watch(gridRepositoryProvider);
-    final gesture = ref.watch(gestureProvider);
+    final gesture = ref.watch(gestureNotifierProvider);
     final gridSettings = ref.watch(gridSettingsProvider);
     final board = ref.watch(boardNotifierProvider(gridRepository));
 
-    final gestureNotifier = ref.read(gestureProvider.notifier);
+    final gestureNotifier = ref.read(gestureNotifierProvider.notifier);
 
     return dictionaryAsync.map(
       loading: (_) => const Center(
@@ -34,8 +34,10 @@ class Grid extends ConsumerWidget {
         points: board.points,
         cells: board.cells,
         isSelected: gesture.isSelected,
-        onPanStart: gestureNotifier.onPanStart,
-        onPanUpdate: gestureNotifier.onPanUpdate,
+        onPanStart: (details) =>
+            gestureNotifier.onPanStart(gridSettings, details),
+        onPanUpdate: (details) =>
+            gestureNotifier.onPanUpdate(gridSettings, details),
         onPanEnd: (_) {
           final boardNotifier = ref.read(
             boardNotifierProvider(gridRepository).notifier,

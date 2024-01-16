@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_state_management_all_in_one/get/board_controller.dart';
 import 'package:flutter_state_management_all_in_one/get/dictionary_controller.dart';
 import 'package:flutter_state_management_all_in_one/get/gesture_controller.dart';
+import 'package:flutter_state_management_all_in_one/get/grid_settings_obs.dart';
 import 'package:flutter_state_management_all_in_one/grid_layout.dart';
-import 'package:flutter_state_management_all_in_one/grid_settings.dart';
 import 'package:get/get.dart';
-
-const gridSettings = GridSettingsDefault();
 
 class Grid extends StatelessWidget {
   const Grid({super.key});
@@ -32,27 +30,30 @@ class Grid extends StatelessWidget {
                     init: BoardController(),
                     builder: (boardController) => GetBuilder(
                       init: GestureController(),
-                      builder: (gestureController) => GridLayout(
-                        gridSettings: gridSettings,
-                        foundWords: boardController.board.foundWords.length,
-                        points: boardController.board.points,
-                        cells: boardController.board.cells,
-                        isSelected: gestureController.gesture.isSelected,
-                        onPanStart: (details) => gestureController.onPanStart(
-                          gridSettings,
-                          details,
+                      builder: (gestureController) => Obx(
+                        () => GridLayout(
+                          gridSettings: gridSettingsObs.value,
+                          foundWords: boardController.board.foundWords.length,
+                          onPanStart: (details) => gestureController.onPanStart(
+                            gridSettingsObs.value,
+                            details,
+                          ),
+                          points: boardController.board.points,
+                          cells: boardController.board.cells,
+                          isSelected: gestureController.gesture.isSelected,
+                          onPanUpdate: (details) =>
+                              gestureController.onPanUpdate(
+                            gridSettingsObs.value,
+                            details,
+                          ),
+                          onPanEnd: (_) {
+                            boardController.searchWord(
+                              snapshot.data!,
+                              gestureController.gesture.indexes,
+                            );
+                            gestureController.onPanEnd();
+                          },
                         ),
-                        onPanUpdate: (details) => gestureController.onPanUpdate(
-                          gridSettings,
-                          details,
-                        ),
-                        onPanEnd: (_) {
-                          boardController.searchWord(
-                            snapshot.data!,
-                            gestureController.gesture.indexes,
-                          );
-                          gestureController.onPanEnd();
-                        },
                       ),
                     ),
                   ),

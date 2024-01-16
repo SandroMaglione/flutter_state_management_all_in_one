@@ -32,41 +32,43 @@ class Grid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Watch((context) {
-      final dictionaryAsync = dictionary.value;
-      return dictionaryAsync.map(
-        loading: () => const Center(
-          child: CircularProgressIndicator(),
-        ),
-        error: (e, _) => Center(
-          child: Text("Error: $e"),
-        ),
-        data: (dictionary) => GridLayout(
-          gridSettings: gridSettings.value,
-          foundWords: board.value.foundWords.length,
-          points: board.value.points,
-          cells: board.value.cells,
-          isSelected: gesture.value.isSelected,
-          onPanStart: (details) {
-            final pos = _panIndex(gridSettings.value, details.localPosition);
-            gesture.value = gesture.value.add(pos.index);
-          },
-          onPanUpdate: (details) {
-            final pos = _panIndex(gridSettings.value, details.localPosition);
-            if (pos.margin.$1 > gridSettings.value.panMargin &&
-                pos.margin.$1 < (1 - gridSettings.value.panMargin) &&
-                pos.margin.$2 > gridSettings.value.panMargin &&
-                pos.margin.$2 < (1 - gridSettings.value.panMargin)) {
+    return Watch(
+      (context) {
+        final dictionaryAsync = dictionary.value;
+        return dictionaryAsync.map(
+          loading: () => const Center(
+            child: CircularProgressIndicator(),
+          ),
+          error: (e, _) => Center(
+            child: Text("Error: $e"),
+          ),
+          data: (dictionary) => GridLayout(
+            gridSettings: gridSettings.value,
+            foundWords: board.value.foundWords.length,
+            points: board.value.points,
+            cells: board.value.cells,
+            isSelected: gesture.value.isSelected,
+            onPanStart: (details) {
+              final pos = _panIndex(gridSettings.value, details.localPosition);
               gesture.value = gesture.value.add(pos.index);
-            }
-          },
-          onPanEnd: (_) {
-            _searchWord(dictionary, gesture.value.indexes);
-            gesture.value = Gesture.empty();
-          },
-        ),
-      );
-    });
+            },
+            onPanUpdate: (details) {
+              final pos = _panIndex(gridSettings.value, details.localPosition);
+              if (pos.margin.$1 > gridSettings.value.panMargin &&
+                  pos.margin.$1 < (1 - gridSettings.value.panMargin) &&
+                  pos.margin.$2 > gridSettings.value.panMargin &&
+                  pos.margin.$2 < (1 - gridSettings.value.panMargin)) {
+                gesture.value = gesture.value.add(pos.index);
+              }
+            },
+            onPanEnd: (_) {
+              _searchWord(dictionary, gesture.value.indexes);
+              gesture.value = Gesture.empty();
+            },
+          ),
+        );
+      },
+    );
   }
 
   void _searchWord(Dictionary dictionary, Set<GridIndex> indexes) {

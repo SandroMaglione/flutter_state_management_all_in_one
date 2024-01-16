@@ -3,15 +3,14 @@ import 'dart:math';
 import 'package:flutter_state_management_all_in_one/alphabet.dart';
 import 'package:flutter_state_management_all_in_one/board.dart';
 import 'package:flutter_state_management_all_in_one/dictionary.dart';
+import 'package:flutter_state_management_all_in_one/get/grid_settings_obs.dart';
 import 'package:flutter_state_management_all_in_one/grid_repository.dart';
 import 'package:flutter_state_management_all_in_one/typedefs.dart';
 import 'package:get/get.dart';
 
-import 'grid.dart';
-
 final _gridRepository = GridRepositoryImpl(
   Random(),
-  gridSettings,
+  gridSettingsObs.value,
   const EnglishAlphabet(),
 );
 
