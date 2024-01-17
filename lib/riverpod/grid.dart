@@ -19,7 +19,7 @@ class Grid extends ConsumerWidget {
     final gridSettings = ref.watch(gridSettingsProvider);
     final board = ref.watch(boardNotifierProvider(gridRepository));
 
-    final gestureNotifier = ref.read(gestureNotifierProvider.notifier);
+    final gestureNotifier = ref.watch(gestureNotifierProvider.notifier);
 
     return dictionaryAsync.map(
       loading: (_) => const Center(
