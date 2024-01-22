@@ -17,19 +17,13 @@ This project is part of my weekly newsletter at [**sandromaglione.com**](https:/
     <img alt="sandromaglione.com Newsletter weekly project" src="https://www.sandromaglione.com/static/images/newsletter_banner.webp" target="_blank" /> 
 </a>
 
-## Project structure 🔜
+## Project structure 
 
-### `bloc`
-- Issues with missing providers
-```dart
-/// This was broken because the type was inferred as [GridSettingsDefault]
-RepositoryProvider(
-  create: (context) => const GridSettingsDefault(),
-)
+The app contains a subfolder for each state management package used: [`bloc`](./lib/bloc/), [`get`](./lib/get/), [`riverpod`](./lib/riverpod/), [`signals`](./lib/signals/).
 
-///                👇 This is required
-RepositoryProvider<GridSettings>(
-  create: (context) => const GridSettingsDefault(),
-)
-```
-- Need to nest `RepositoryProvider` when one repository depends on another
+**Read all the details of the implementation in the full article** 👇
+
+
+<a href="https://www.sandromaglione.com/articles/flutter-state-management-riverpod-bloc-signals-getx?ref=Github&utm_medium=newsletter_project&utm_term=flutter">
+    <img alt="Read the full article on my website" src="https://www.sandromaglione.com/api/image?title=Flutter%20State%20Management:%20Riverpod,%20Bloc,%20Signals,%20GetX&publishedAt=2024-01-17" target="_blank" /> 
+</a>
