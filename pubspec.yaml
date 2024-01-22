@@ -11,8 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  itrie:
-    path: ./packages/itrie
+  itrie: ^0.0.1
 
   # bloc
   flutter_bloc: ^8.1.3

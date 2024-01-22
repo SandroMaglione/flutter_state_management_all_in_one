@@ -358,9 +358,10 @@ packages:
   itrie:
     dependency: "direct main"
     description:
-      path: "packages/itrie"
-      relative: true
-    source: path
+      name: itrie
+      sha256: db9c023685ace74d0c95665c7898e64a1460d6d5f7b454082534f8905cb40c44
+      url: "https://pub.dev"
+    source: hosted
     version: "0.0.1"
   js:
     dependency: transitive
