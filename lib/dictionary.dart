@@ -13,6 +13,7 @@ final class Dictionary {
 
   static Future<Dictionary> init() async {
     final file = await rootBundle.loadString('assets/words.txt');
+    final letterMap = const EnglishAlphabet().letterMap;
     final iterable = file.split("\n").map(
           (key) => (
             key.toUpperCase(),
@@ -20,13 +21,8 @@ final class Dictionary {
               points: key
                   .toUpperCase()
                   .split("")
-                  .map(
-                    (letter) =>
-                        const EnglishAlphabet().letterMap[letter]!.points,
-                  )
-                  .reduce(
-                    (acc, points) => acc + points,
-                  ),
+                  .map((letter) => letterMap[letter]!.points)
+                  .reduce((acc, points) => acc + points),
             ),
           ),
         );
